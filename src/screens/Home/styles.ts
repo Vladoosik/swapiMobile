@@ -19,7 +19,6 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: 'center',
     borderRadius: 5,
-    borderColor: 'blue',
   },
   btnPrev: {
     paddingVertical: 5,
