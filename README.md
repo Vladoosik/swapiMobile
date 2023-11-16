@@ -2,41 +2,55 @@
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
-## Step 1: Start the Metro Server
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Step 1: Clone the project
+first of all you need clone this project using git.
+Go to console and choose the  desired folder where you want to deploy the project. 
+Write on console the following command:
+
+```bash
+git clone https://github.com/Vladoosik/swapiMobile.git
+```
+
+Wait until cloning is completed, then proceed to the next step
+
+
+## Step 2: Install the required modules
+In order for the project to run, you need to install the necessary modules; this
+can be done by writing the following command in the terminal:
+
+```bash
+# using Yarn
+yarn install
+```
+The project uses only the **yarn** package manager, you will need to install it first
+
+## Step 3: Start the Metro Server
+
+Third, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
 To start Metro, run the following command from the _root_ of your React Native project:
 
 ```bash
-# using npm
-npm start
-
-# OR using Yarn
+# Project use only yarn
 yarn start
 ```
 
-## Step 2: Start your Application
+## Step 4: Start your Application
 
 Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
 ### For Android
 
 ```bash
-# using npm
-npm run android
-
-# OR using Yarn
+#using only yarn
 yarn android
 ```
 
 ### For iOS
 
 ```bash
-# using npm
-npm run ios
-
-# OR using Yarn
+#using Yarn
 yarn ios
 ```
 
@@ -44,7 +58,7 @@ If everything is set up _correctly_, you should see your new app running in your
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Congratulations, you are amazing
+## Step 5: Congratulations, you are amazing
 
 Now you can use the application
 

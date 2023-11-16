@@ -8,8 +8,6 @@ import { EmptyList, Header, HeaderList, RenderItems } from "../../components";
 import ResponseStore from "../../store/responseStore";
 // styles
 import { styles } from "./styles";
-// utils
-import { CountGender } from "../../utils/countGender";
 // types
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../types/RootStackParamList";
@@ -28,11 +26,9 @@ const Home: FC<HomeScreenProps> = observer((props): JSX.Element => {
     setFavorites,
     favorites,
     resetFavorite,
+    genderCounts,
   } = ResponseStore;
   const [value, setValue] = useState<MemberType[] | null>(null);
-  const countMale = CountGender(favorites, "male");
-  const countFemale = CountGender(favorites, "female");
-  const countOther = CountGender(favorites);
   const loadingArray = new Array(7).fill(null);
 
   const detailsNavigate = (item: MemberType) => {
@@ -48,20 +44,20 @@ const Home: FC<HomeScreenProps> = observer((props): JSX.Element => {
   return (
     <>
       <Header
-        countFemale={countFemale}
-        countMale={countMale}
-        countOther={countOther}
+        countFemale={genderCounts.female}
+        countMale={genderCounts.male}
+        countOther={genderCounts.other}
         onResetPress={resetFavorite}
       />
       <FlatList
         ListEmptyComponent={EmptyList}
         ListHeaderComponent={HeaderList}
         stickyHeaderIndices={[0]}
-        data={loading || !value ? loadingArray : value}
+        data={loading ? loadingArray : value}
         contentContainerStyle={styles.renderContainer}
         renderItem={({ item, index }) => (
           <RenderItems
-            loading={loading || !value}
+            loading={loading}
             item={item}
             key={index}
             activeStar={favorites.includes(item)}
@@ -72,9 +68,12 @@ const Home: FC<HomeScreenProps> = observer((props): JSX.Element => {
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={[styles.btnPrev, { borderColor: page <= 1 ? "gray" : "red" }]}
+          style={[
+            styles.btnPrev,
+            { borderColor: page <= 1 || loading ? "gray" : "red" },
+          ]}
           onPress={prevPage}
-          disabled={page <= 1 || loading || !value}
+          disabled={page <= 1 || loading}
         >
           <Text>Prev</Text>
         </TouchableOpacity>
@@ -82,7 +81,10 @@ const Home: FC<HomeScreenProps> = observer((props): JSX.Element => {
           <Text>{page}</Text>
         </View>
         <TouchableOpacity
-          style={styles.btnNext}
+          style={[
+            styles.btnNext,
+            { borderColor: !value || loading ? "gray" : "blue" },
+          ]}
           onPress={nextPage}
           disabled={loading || !value}
         >

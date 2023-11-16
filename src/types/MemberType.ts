@@ -16,3 +16,9 @@ export type MemberType = {
     edited: string
     url: string
 }
+
+export type GenderCountType = {
+    male: number
+    female: number
+    other: number
+}

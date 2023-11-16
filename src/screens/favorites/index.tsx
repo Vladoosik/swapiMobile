@@ -6,8 +6,6 @@ import { observer } from "mobx-react";
 import ResponseStore from "../../store/responseStore";
 // components
 import { EmptyList, Header, HeaderList, RenderItems } from "../../components";
-// utils
-import { CountGender } from "../../utils/countGender";
 // types
 import { MemberType } from "../../types/MemberType";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -20,16 +18,12 @@ type FavoritesScreenProps = NativeStackScreenProps<
 
 const Favorites: FC<FavoritesScreenProps> = observer((props): JSX.Element => {
   const { navigation } = props;
-  const { favorites, resetFavorite, setFavorites } = ResponseStore;
+  const { favorites, resetFavorite, setFavorites, genderCounts } = ResponseStore;
   const [value, setValue] = useState<MemberType[] | null>(null);
 
   useEffect(() => {
     setValue(favorites);
   }, [favorites]);
-
-  const countMale = CountGender(favorites, "male");
-  const countFemale = CountGender(favorites, "female");
-  const countOther = CountGender(favorites);
 
   const detailNavigate = (item: MemberType) => {
     navigation.navigate("Details", {
@@ -40,9 +34,9 @@ const Favorites: FC<FavoritesScreenProps> = observer((props): JSX.Element => {
   return (
     <>
       <Header
-        countOther={countOther}
-        countMale={countMale}
-        countFemale={countFemale}
+        countOther={genderCounts.other}
+        countMale={genderCounts.male}
+        countFemale={genderCounts.female}
         onResetPress={resetFavorite}
       />
       <FlatList
@@ -53,6 +47,7 @@ const Favorites: FC<FavoritesScreenProps> = observer((props): JSX.Element => {
           <RenderItems
             item={item}
             key={index}
+            activeStar={favorites.includes(item)}
             onItemPress={() => detailNavigate(item)}
             onStarPress={() => setFavorites(item)}
           />
